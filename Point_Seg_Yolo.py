@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from os import listdir
 from PIL import Image
 
-input_filepath = "/storage/lol/gg/yolov5/Point_Seg_data/"
+input_filepath = "/storage/lol/gg/yolov5/Point_Seg_data_1/"
 output_filepath = "/storage/lol/gg/yolov5/Point_Seg_data_Output/"
 output_k = len(os.listdir(output_filepath)) + 1  
 output_filepath = output_filepath + str(output_k) + "/"
@@ -46,16 +46,31 @@ def merge(GG):
 
 
 k=0
-for i in range(0,len(os.listdir(input_filepath+"0_images"))):
+import os
+from os.path import isfile, join
+for i in range(0,len(os.listdir(input_filepath+"0_person_image"))):
+    pass
+for gg in (os.listdir(input_filepath+"0_person_image")):
+    i = gg.split(".png")[0]
 
-    image_path = input_filepath + "0_images/%s.jpg"%str(i)
-    image_yolo_path = input_filepath + "exp6_image_data/%s.jpg"%str(i)
+    # image_path = input_filepath + "0_images/%s.jpg"%str(i)
+    # image_yolo_path = input_filepath + "exp6_image_data/%s.jpg"%str(i)
 
-    bin_path = input_filepath + "exp6_bin_data/%s.bin"%str(k)
-    # bin_path = input_filepath + "exp6_bin_data/"
+    # bin_path = input_filepath + "exp6_bin_data/%s.bin"%str(k)
+    # # bin_path = input_filepath + "exp6_bin_data/"
 
-    calib_text_path_final = input_filepath + "calib/1.txt"
-    position_path = input_filepath + "poisition_data/%s.txt"%str(k)
+    # calib_text_path_final = input_filepath + "calib/1.txt"
+    # position_path = input_filepath + "poisition_data/%s.txt"%str(k)
+
+
+    image_path = input_filepath + "0_person_image/%s.png"%str(i)
+    image_yolo_path = input_filepath + "4_detect_image/%s.png"%str(i)
+    bin_path = input_filepath + "1_person_bin/%s.bin"%str(i)
+    calib_text_path_final = input_filepath + "2_calibtxt/%s.txt"%str(i)
+    position_path = input_filepath + "3_poisition_data/%s.txt"%str(i)
+
+    # print(position_path)
+    # continue
 
     seg_bin_folder_path = output_filepath + "seg_bin/"
     single_fusion_folder_path = output_filepath + "single_fusion/"
@@ -73,13 +88,23 @@ for i in range(0,len(os.listdir(input_filepath+"0_images"))):
         input_message.data_output(seg_bin_folder_path,single_fusion_folder_path,all_fusion_folder_path)
         input_message.seg_point()
 
+        # GG=b(
+        #     image_path,
+        #     image_yolo_path,
+        #     single_fusion_folder_path + "%s.jpg"%str(i),
+        #     all_fusion_folder_path + "%s.jpg"%str(i),
+        #     all_in_one_path + "%s.jpg"%str(i)
+        #     )
+
+
         GG=b(
             image_path,
             image_yolo_path,
-            single_fusion_folder_path + "%s.jpg"%str(i),
-            all_fusion_folder_path + "%s.jpg"%str(i),
-            all_in_one_path + "%s.jpg"%str(i)
+            single_fusion_folder_path + "%s.png"%str(i),
+            all_fusion_folder_path + "%s.png"%str(i),
+            all_in_one_path + "%s.png"%str(i)
             )
+            
         merge(GG)
 
         k = k + 1
